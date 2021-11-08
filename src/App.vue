@@ -4,14 +4,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import HelloWorld from "./components/HelloWorld.vue";
+import { defineComponent } from 'vue';
+import HelloWorld from './components/HelloWorld.vue';
 
 export default defineComponent({
-  name: "App",
+  name: 'app',
   components: {
-    HelloWorld,
-  },
+    HelloWorld
+
+
+
+    
+  }
 });
 </script>
 
@@ -23,5 +27,11 @@ export default defineComponent({
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.app {
+  .text {
+    background-color: #fff;
+  }
+  color: red;
 }
 </style>
