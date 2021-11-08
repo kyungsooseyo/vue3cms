@@ -11,10 +11,6 @@ export default defineComponent({
   name: 'app',
   components: {
     HelloWorld
-
-
-
-    
   }
 });
 </script>
