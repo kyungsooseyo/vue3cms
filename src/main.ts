@@ -15,4 +15,4 @@ KYRequest.request({
   url: '/home/multidata',
   method: 'GET'
 });
-console.log(process.env.VUE_APP_BASE_NAME); //= 若想在ts中使用，必须在shims-vue.d.ts文件里面声明一下
+//console.log(process.env.VUE_APP_BASE_NAME); //= 若想在ts中使用，必须在shims-vue.d.ts文件里面声明一下

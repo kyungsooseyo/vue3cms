@@ -6,6 +6,11 @@ const ksRequest = new KSRequest({
   interceptors: {
     requestInterceptor: (config) => {
       console.log('请求成功的拦截');
+      const token = '';
+      if (token) {
+        // headers里面没有Authorization 这个属性
+        // config.headers.Authorization = `Bearer ${token}`;
+      }
       return config;
     },
     requestInterceptorCatch: (err) => {
