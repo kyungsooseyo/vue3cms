@@ -2,15 +2,15 @@ import axios from 'axios';
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ElLoading } from 'element-plus';
 import { ILoadingInstance } from 'element-plus/lib/components/loading/src/loading.type';
-interface KSRequestInterceptors {
+interface KSRequestInterceptors<T = AxiosResponse> {
   requestInterceptor?: (config: AxiosRequestConfig) => AxiosRequestConfig;
   requestInterceptorCatch?: (err: any) => any;
-  responseInterceptor?: (res: AxiosResponse) => AxiosResponse;
+  responseInterceptor?: (res: T) => T;
   responseInterceptorCatch?: (err: any) => any;
 }
 //, 这样做的原因就是可以让外界传入拦截器
-interface KSRequestConfig extends AxiosRequestConfig {
-  interceptors?: KSRequestInterceptors;
+interface KSRequestConfig<T = AxiosResponse> extends AxiosRequestConfig {
+  interceptors?: KSRequestInterceptors<T>;
   showLoading?: boolean;
 }
 export default class KSRequest {
@@ -57,7 +57,7 @@ export default class KSRequest {
         console.log('所有实例的拦截-响应成功');
         // - 在响应成功后要移除loading
         this.loading?.close();
-        return res;
+        return res.data;
       },
       (err) => {
         this.loading?.close();
@@ -65,16 +65,33 @@ export default class KSRequest {
       }
     );
   }
-  request(config: KSRequestConfig): void {
-    if (config.interceptors?.requestInterceptor) {
-      config = config.interceptors.requestInterceptor(config);
-    }
-    if (config.showLoading == false) {
-      this.showLoading = false;
-    }
-    this.instance.request(config).then((res) => {
-      console.log(res);
+  request<T>(config: KSRequestConfig): Promise<T> {
+    return new Promise((resolve, reject) => {
+      if (config.interceptors?.requestInterceptor) {
+        config = config.interceptors.requestInterceptor(config);
+      }
+      if (config.showLoading == false) {
+        this.showLoading = false;
+      }
+      this.instance.request<any, T>(config).then((res) => {
+        if (config.interceptors?.responseInterceptor) {
+          // res = config.interceptors.responseInterceptor(res);
+        }
+        resolve(res);
+      });
+      this.showLoading = true;
     });
-    this.showLoading = true;
+  }
+  get<T>(config: KSRequestConfig): Promise<T> {
+    return this.request<T>({ ...config, method: 'get' });
+  }
+  post<T>(config: KSRequestConfig): Promise<T> {
+    return this.request({ ...config, method: 'post' });
+  }
+  delete<T>(config: KSRequestConfig): Promise<T> {
+    return this.request({ ...config, method: 'delete' });
+  }
+  patch<T>(config: KSRequestConfig): Promise<T> {
+    return this.request({ ...config, method: 'patch' });
   }
 }
