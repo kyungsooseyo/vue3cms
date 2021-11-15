@@ -1,11 +1,11 @@
 <template>
   <div class="login-panel">
     <h2 class="title">后台管理系统</h2>
-    <el-tabs type="border-card" stretch>
-      <el-tab-pane label="账号登录">
+    <el-tabs type="border-card" stretch v-model="currentTab">
+      <el-tab-pane label="账号登录" name="account">
         <login-account ref="accountRef"></login-account>
       </el-tab-pane>
-      <el-tab-pane label="手机登录">
+      <el-tab-pane label="手机登录" name="phone">
         <login-phone></login-phone>
       </el-tab-pane>
     </el-tabs>
@@ -32,14 +32,16 @@ import LoginPhone from './LoginPhone.vue';
 export default defineComponent({
   components: { LoginAccount, LoginPhone },
   setup() {
-    const isKeepPassword = ref(true);
+    const isKeepPassword = ref<boolean>(true);
+    const currentTab = ref<string>('account');
     //! 通过这种方式来指定这个组件的类型、记住！！这样的话就只能调用loginAction这个方法了，写其他的都会报错
     const accountRef = ref<InstanceType<typeof LoginAccount>>(); // 这先不能写null 因为类型推断的话是找不到loginAction这个方法的
     const handleLogin = () => {
-      console.log('点击');
-      accountRef.value?.loginAction();
+      if (currentTab.value == 'account') {
+        accountRef.value?.loginAction(isKeepPassword.value);
+      }
     };
-    return { isKeepPassword, handleLogin, accountRef };
+    return { isKeepPassword, handleLogin, accountRef, currentTab };
   }
 });
 </script>

@@ -1,5 +1,5 @@
 import { createApp } from 'vue';
-import KYRequest from './service/index';
+// import KYRequest from './service/index';
 import 'element-plus/dist/index.css';
 import App from './App.vue';
 import router from './router';

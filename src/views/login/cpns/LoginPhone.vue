@@ -5,14 +5,6 @@
         <el-input v-model="form.phone"></el-input>
       </el-form-item>
       <el-form-item label="验证码" prop="identifyingCode">
-        <!-- <el-row>
-          <el-col :span="12" :offset="0">
-            <el-input v-model="form.identifyingCode"> </el-input>
-          </el-col>
-          <el-col :span="12" :offset="0">
-            <el-button type="primary" size="mini">获取验证码</el-button>
-          </el-col>
-        </el-row> -->
         <div class="get-code">
           <el-input v-model="form.identifyingCode"> </el-input>
           <el-button type="primary" size="mini" class="get-code-btn"
