@@ -9,8 +9,9 @@ const ksRequest = new KSRequest({
       const token = '';
       if (token) {
         // headers里面没有Authorization 这个属性
-        // config.headers.Authorization = `Bearer ${token}`;
+        config.headers.Authorization = `Bearer ${token}`;
       }
+
       return config;
     },
     requestInterceptorCatch: (err) => {

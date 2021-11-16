@@ -1,9 +1,10 @@
-import axios from 'axios';
+import axios, { AxiosRequestHeaders } from 'axios';
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ElLoading } from 'element-plus';
 import { ILoadingInstance } from 'element-plus/lib/components/loading/src/loading.type';
 interface KSRequestInterceptors<T = AxiosResponse> {
-  requestInterceptor?: (config: AxiosRequestConfig) => AxiosRequestConfig;
+  // ? requestInterceptor?: (config: AxiosRequestConfig) => AxiosRequestConfig; 如果这么写的话 那边通过config.header.Authorization会报错
+  requestInterceptor?: (config: any) => AxiosRequestConfig;
   requestInterceptorCatch?: (err: any) => any;
   responseInterceptor?: (res: T) => T;
   responseInterceptorCatch?: (err: any) => any;
@@ -38,6 +39,7 @@ export default class KSRequest {
     this.instance.interceptors.request.use(
       (config) => {
         console.log('所有实例的拦截-请求成功');
+
         if (this.showLoading == true) {
           this.loading = ElLoading.service({
             lock: true,

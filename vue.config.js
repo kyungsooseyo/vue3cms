@@ -1,6 +1,17 @@
 const path = require('path');
 const resolve = (dir) => path.join(__dirname, dir);
 module.exports = {
+  devServer: {
+    proxy: {
+      '^/api': {
+        target: 'http://152.136.185.210:5000',
+        pathRewrite: {
+          '^/api': ''
+        },
+        changeOrigin: true
+      }
+    }
+  },
   chainWebpack: (config) => {
     config.resolve.alias
       .set('@', resolve('src'))

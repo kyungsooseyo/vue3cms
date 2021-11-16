@@ -42,7 +42,7 @@ export default defineComponent({
           }
           store.dispatch('accountLoginAction', { ...account });
         } else {
-          console.log('验证不通过');
+          console.log('验证不通过ss');
         }
       });
     };
