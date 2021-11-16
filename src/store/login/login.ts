@@ -1,21 +1,50 @@
 import { Module } from 'vuex';
 import { ILoginState } from './types';
 import { IRootState } from '../types';
-import { accountLoginRequest } from '@/service/login/login';
+import {
+  accountLoginRequest,
+  requestUserInfoById,
+  requestUserMenusById
+} from '@/service/login/login';
+import localCache from '@/utils/cache';
 const loginModule: Module<ILoginState, IRootState> = {
   state() {
     return {
       token: '',
-      userInfo: {}
+      userInfo: {},
+      userMenus: []
     };
   },
   getters: {},
-  mutations: {},
+  mutations: {
+    changeToken(state, token: string) {
+      state.token = token;
+    },
+    changeUserInfo(state, userInfo) {
+      state.userInfo = userInfo;
+    },
+    changeUserMenus(state, userMenus) {
+      state.userMenus = userMenus;
+    }
+  },
   actions: {
     async accountLoginAction({ commit }, payload: any) {
       const loginResult = await accountLoginRequest(payload);
-      console.log(loginResult);
+      // console.log(loginResult);
       const { code, data } = loginResult; // ~因为在post方法里面已经指定泛型了，所以必须要站在types里面定义一下，然后让外面的函数调用时也写传一下泛型，否则是无法解构到的
+      const { id, token } = data;
+      commit('changeToken', token);
+      localCache.setCache('token', token);
+      const userInfoResult = await requestUserInfoById(id);
+      const userInfo = userInfoResult.data;
+      // console.log(userInfo);
+      commit('changeUserInfo', userInfo);
+      localCache.setCache('userInfo', userInfo);
+
+      // 跳转到首页、不同的用户有不同的菜单
+      const userMenuResult = await requestUserMenusById(userInfo.role.id);
+      const userMenus = userMenuResult.data;
+      console.log(userMenus);
     }
   }
 };

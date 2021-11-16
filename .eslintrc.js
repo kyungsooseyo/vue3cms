@@ -21,6 +21,6 @@ module.exports = {
     //= 这个用来控制require path中eslint报错，可以直接从eslint报错复制过来，然后写上off就可以
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
-    '@typescript-eslint/explicit-module-boundary-types':'off'
+    '@typescript-eslint/explicit-module-boundary-types': 'off'
   }
 };
