@@ -14,3 +14,8 @@ const store = createStore<IRootState>({
   modules: { loginModule }
 });
 export default store;
+
+// 初始化vuex 即使用户刷新，也要维持vuex中的数据
+export function setupStore() {
+  store.dispatch('loadLocalLogin');
+}

@@ -1,4 +1,4 @@
-import axios, { AxiosRequestHeaders } from 'axios';
+import axios from 'axios';
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ElLoading } from 'element-plus';
 import { ILoadingInstance } from 'element-plus/lib/components/loading/src/loading.type';
@@ -38,7 +38,7 @@ export default class KSRequest {
     // debugger;
     this.instance.interceptors.request.use(
       (config) => {
-        console.log('所有实例的拦截-请求成功');
+        // console.log('所有实例的拦截-请求成功');
 
         if (this.showLoading == true) {
           this.loading = ElLoading.service({
@@ -56,7 +56,7 @@ export default class KSRequest {
     );
     this.instance.interceptors.response.use(
       (res) => {
-        console.log('所有实例的拦截-响应成功');
+        // console.log('所有实例的拦截-响应成功');
         // - 在响应成功后要移除loading
         this.loading?.close();
         return res.data;
@@ -68,7 +68,7 @@ export default class KSRequest {
     );
   }
   request<T>(config: KSRequestConfig): Promise<T> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       if (config.interceptors?.requestInterceptor) {
         config = config.interceptors.requestInterceptor(config);
       }

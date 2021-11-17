@@ -6,6 +6,7 @@ enum LoginApi {
   LoginUserInfo = '/users/',
   UserMenus = '/role/' // 用法 /role/1/menu
 }
+//, 用户登录
 export function accountLoginRequest(account: IAccount) {
   return kyRequest.post<IDataType<ILoginResult>>({
     url: LoginApi.AccountLogin,
@@ -13,14 +14,14 @@ export function accountLoginRequest(account: IAccount) {
   });
 }
 
-// 请求用户的userInfo
+//, 请求用户的userInfo
 export function requestUserInfoById(id: number) {
   return kyRequest.get<IDataType>({
     url: LoginApi.LoginUserInfo + id
   });
 }
 
-// 请求用户的菜单
+//, 请求用户的菜单
 export function requestUserMenusById(id: number) {
   return ksRequest.get<IDataType>({
     url: LoginApi.UserMenus + id + '/menu'

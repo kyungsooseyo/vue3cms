@@ -7,6 +7,7 @@ import {
   requestUserMenusById
 } from '@/service/login/login';
 import localCache from '@/utils/cache';
+import router from '@/router';
 const loginModule: Module<ILoginState, IRootState> = {
   state() {
     return {
@@ -44,7 +45,26 @@ const loginModule: Module<ILoginState, IRootState> = {
       // 跳转到首页、不同的用户有不同的菜单
       const userMenuResult = await requestUserMenusById(userInfo.role.id);
       const userMenus = userMenuResult.data;
-      console.log(userMenus);
+      commit('changeUserMenus', userMenus);
+      localCache.setCache('userMenus', userMenus);
+      // console.log(userMenus);
+      //- 跳到首页
+      router.push('/main');
+    },
+    //~ 浏览器刷新时也要维持vuex中的数据
+    loadLocalLogin({ commit }) {
+      const token = localCache.getCache('token');
+      if (token) {
+        commit('changeToken', token);
+      }
+      const userInfo = localCache.getCache('userInfo');
+      if (userInfo) {
+        commit('changeUserInfo', userInfo);
+      }
+      const userMenus = localCache.getCache('userMenus');
+      if (userMenus) {
+        commit('changeUserMenus', userMenus);
+      }
     }
   }
 };

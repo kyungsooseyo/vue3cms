@@ -15,18 +15,14 @@
         >忘记密码</el-link
       >
     </div>
-    <el-button
-      type="primary"
-      size="default"
-      @click="handleLogin"
-      class="login-btn"
+    <el-button type="primary" @click="handleLogin" class="login-btn"
       >立即登录</el-button
     >
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, nextTick, ref } from 'vue';
 import LoginAccount from './LoginAccount.vue';
 import LoginPhone from './LoginPhone.vue';
 export default defineComponent({

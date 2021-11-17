@@ -9,14 +9,14 @@ const ksRequest = new KSRequest({
       console.log('请求成功的拦截');
       const token = localCache.getCache('token');
       if (token) {
-        // headers里面没有Authorization 这个属性
+        // headers里面没有Authorization 这个属性 只能在外面来指定any类型了
         config.headers.Authorization = `Bearer ${token}`;
       }
 
       return config;
     },
     requestInterceptorCatch: (err) => {
-      console.log('请求失败的拦截');
+      // console.log('请求失败的拦截');
       return err;
     },
     responseInterceptor: (res) => {
@@ -24,7 +24,7 @@ const ksRequest = new KSRequest({
       return res;
     },
     responseInterceptorCatch: (err) => {
-      console.log('响应失败的拦截');
+      // console.log('响应失败的拦截');
       return err;
     }
   }
