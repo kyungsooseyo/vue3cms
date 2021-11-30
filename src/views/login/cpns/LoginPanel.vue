@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 import LoginAccount from './LoginAccount.vue';
 import LoginPhone from './LoginPhone.vue';
 export default defineComponent({

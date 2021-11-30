@@ -11,7 +11,11 @@ import {
   ElRadio,
   ElTabPane,
   ElTabs,
-  ElCalendar
+  ElCalendar,
+  ElContainer,
+  ElHeader,
+  ElMain,
+  ElAside
 } from 'element-plus';
 
 const components = [
@@ -25,7 +29,11 @@ const components = [
   ElCheckbox,
   ElLink,
   ElIcon,
-  ElCalendar
+  ElCalendar,
+  ElContainer,
+  ElHeader,
+  ElMain,
+  ElAside
 ];
 
 export default function (app: App): void {
