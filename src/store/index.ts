@@ -1,5 +1,5 @@
-import { createStore } from 'vuex';
-import { IRootState } from './types';
+import { createStore, Store, useStore as useVuexStore } from 'vuex';
+import { IRootState, IStoreType } from './types';
 import loginModule from './login/login';
 const store = createStore<IRootState>({
   state: () => {
@@ -18,4 +18,7 @@ export default store;
 // 初始化vuex 即使用户刷新，也要维持vuex中的数据
 export function setupStore() {
   store.dispatch('loadLocalLogin');
+}
+export function useStore(): Store<IStoreType> {
+  return useVuexStore();
 }
