@@ -16,7 +16,7 @@
     >
       <template v-for="item in userMenus" :key="item.id">
         <!-- 二级菜单 -->
-        <template v-if="item.type === 1">
+        <template v-if="item.type == 1">
           <!-- 二级菜单展示的标题 -->
           <el-submenu index="">
             <i v-if="item.icon" :class="item.icon">
@@ -46,16 +46,17 @@
 <script lang="ts">
 import { defineComponent, computed, onMounted } from 'vue';
 // import {useStore} from 'vuex';
-import { useStore } from '@/store';
+import { useStore } from '@/store/index';
 import localCache from '@/utils/cache';
 export default defineComponent({
   setup() {
+    const store = useStore();
     onMounted(() => {
       //
-      //? console.log(store.state.login); 有问题 拿不到
     });
-    const store = useStore();
-    const userMenus = computed(() => localCache.getCache('userMenus'));
+    const userMenus = computed(() => store.state.loginModule?.userMenus);
+
+    // const userMenus = computed(() => localCache.getCache('userMenus'));
 
     return { userMenus };
   }
