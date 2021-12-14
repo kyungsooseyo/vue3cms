@@ -1,41 +1,44 @@
-/* eslint-disable */
 <template>
   <div class="nav-menu">
     <div class="logo">
-      <img src="~@/assets/img/logo.svg" class="img" alt="logo" />
-      <span class="title">Vue3+TS</span>
+      <img class="img" src="~@/assets/img/logo.svg" alt="logo" />
+      <span v-if="!collapse" class="title">Vue3+TS</span>
     </div>
     <el-menu
-      active-text-color="#ffd04b"
-      background-color="#545c64"
-      class="el-menu-vertical-demo"
       default-active="2"
-      text-color="#fff"
-      @open="handleOpen"
-      @close="handleClose"
+      class="el-menu-vertical"
+      :collapse="collapse"
+      background-color="#0c2135"
+      text-color="#b7bdc3"
+      active-text-color="#0a60bd"
     >
       <template v-for="item in userMenus" :key="item.id">
         <!-- 二级菜单 -->
-        <template v-if="item.type == 1">
-          <!-- 二级菜单展示的标题 -->
-          <el-submenu index="">
-            <i v-if="item.icon" :class="item.icon">
+        <template v-if="item.type === 1">
+          <!-- 二级菜单的可以展开的标题 -->
+          <!-- index作为唯一标识 -->
+          <el-sub-menu :index="item.id + ''">
+            <template #title>
+              <!-- <i v-if="item.icon" :class="item.icon"></i> -->
+              <el-icon>
+                <fold></fold>
+              </el-icon>
               <span>{{ item.name }}</span>
-            </i>
-          </el-submenu>
-          <!--  遍历item-->
-          <template v-for="subitem in item.children" :key="subitem.id">
-            <el-menu-item index="">
-              <i v-if="subitem.icon" :class="subitem.icon"></i>
-            </el-menu-item>
-          </template>
+            </template>
+            <!-- 遍历里面的item -->
+            <template v-for="subitem in item.children" :key="subitem.id">
+              <el-menu-item :index="subitem.id + ''">
+                <!-- <i v-if="subitem.icon" :class="subitem.icon"></i> -->
+                <span>{{ subitem.name }}</span>
+              </el-menu-item>
+            </template>
+          </el-sub-menu>
         </template>
         <!-- 一级菜单 -->
-        <template v-else-if="item.type == 2">
-          <el-menu-item index="">
-            <i :class="item.icon" v-if="item.icon">
-              <span>{{ item.name }}</span>
-            </i>
+        <template v-else-if="item.type === 2">
+          <el-menu-item :index="item.id + ''">
+            <i v-if="item.icon" :class="item.icon"></i>
+            <span>{{ item.name }}</span>
           </el-menu-item>
         </template>
       </template>
@@ -44,21 +47,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, onMounted } from 'vue';
-// import {useStore} from 'vuex';
-import { useStore } from '@/store/index';
-import localCache from '@/utils/cache';
+import { defineComponent, computed } from 'vue';
+import { useStore } from '@/store';
+
+// vuex - typescript  => pinia
+
 export default defineComponent({
+  props: {
+    collapse: {
+      type: Boolean,
+      default: false
+    }
+  },
   setup() {
     const store = useStore();
-    onMounted(() => {
-      //
-    });
     const userMenus = computed(() => store.state.loginModule?.userMenus);
-
-    // const userMenus = computed(() => localCache.getCache('userMenus'));
-
-    return { userMenus };
+    // console.log(userMenus);
+    return {
+      userMenus
+    };
   }
 });
 </script>

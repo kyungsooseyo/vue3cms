@@ -1,11 +1,13 @@
 <template>
   <div class="main">
     <el-container class="main-content">
-      <el-aside width="210px">
-        <nav-menu></nav-menu>
+      <el-aside :width="collapse ? '60px' : '210px'">
+        <nav-menu :collapse="collapse"></nav-menu>
       </el-aside>
       <el-container class="page">
-        <el-header class="page-header">Header</el-header>
+        <el-header class="page-header">
+          <nav-header @foldChange="handleFoldChange"></nav-header>
+        </el-header>
         <el-main class="page-content">Main</el-main>
       </el-container>
     </el-container>
@@ -14,11 +16,18 @@
 
 <script lang="ts">
 import NavMenu from '@/components/nav-menu';
-import { defineComponent } from 'vue';
+import NavHeader from '@/components/nav-header';
+import { defineComponent, ref } from 'vue';
 export default defineComponent({
-  components: { NavMenu },
+  components: { NavMenu, NavHeader },
   setup() {
-    return {};
+    let collapse = ref(false);
+    const handleFoldChange = (value: boolean) => {
+      // console.log(value);
+      collapse.value = value;
+    };
+
+    return { handleFoldChange, collapse };
   }
 });
 </script>

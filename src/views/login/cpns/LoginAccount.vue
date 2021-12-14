@@ -40,6 +40,7 @@ export default defineComponent({
             localCache.deleteCache('name');
             localCache.deleteCache('password');
           }
+          // ?? 这为什么要用展开运算符呢？？
           store.dispatch('accountLoginAction', { ...account });
         } else {
           console.log('验证不通过ss');
