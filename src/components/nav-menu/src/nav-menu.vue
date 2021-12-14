@@ -21,7 +21,7 @@
             <template #title>
               <!-- <i v-if="item.icon" :class="item.icon"></i> -->
               <el-icon>
-                <fold></fold>
+                <me></me>
               </el-icon>
               <span>{{ item.name }}</span>
             </template>
@@ -37,7 +37,7 @@
         <!-- 一级菜单 -->
         <template v-else-if="item.type === 2">
           <el-menu-item :index="item.id + ''">
-            <i v-if="item.icon" :class="item.icon"></i>
+            <!-- <i v-if="item.icon" :class="item.icon"></i> -->
             <span>{{ item.name }}</span>
           </el-menu-item>
         </template>

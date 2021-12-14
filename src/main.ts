@@ -7,12 +7,17 @@ import store from './store';
 // import ElementPlus from 'element-plus';
 // import 'normalize.css';
 import { globalRegister } from './global';
-import { Edit, SetUp, Fold } from '@element-plus/icons-vue';
+// ~因为html提供了Menu这个元素，所有要起个别名
+import { Edit, SetUp, Fold, Menu as Me } from '@element-plus/icons-vue';
 // import ElementPlus from 'element-plus';
 // import 'element-plus/dist/index.css';
 import { setupStore } from './store/index';
 const app = createApp(App);
-app.component('edit', Edit).component('set-up', SetUp).component('fold', Fold);
+app
+  .component('edit', Edit)
+  .component('set-up', SetUp)
+  .component('fold', Fold)
+  .component('me', Me);
 // app.use(ElementPlus);
 app.use(router);
 app.use(store);
