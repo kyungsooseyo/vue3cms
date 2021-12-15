@@ -8,7 +8,17 @@ import store from './store';
 // import 'normalize.css';
 import { globalRegister } from './global';
 // ~因为html提供了Menu这个元素，所有要起个别名
-import { Edit, SetUp, Fold, Menu as Me } from '@element-plus/icons-vue';
+import {
+  Edit,
+  SetUp,
+  Fold,
+  Menu as Me,
+  Monitor,
+  GoodsFilled,
+  User,
+  ChatDotRound,
+  ArrowDown
+} from '@element-plus/icons-vue';
 // import ElementPlus from 'element-plus';
 // import 'element-plus/dist/index.css';
 import { setupStore } from './store/index';
@@ -17,7 +27,12 @@ app
   .component('edit', Edit)
   .component('set-up', SetUp)
   .component('fold', Fold)
-  .component('me', Me);
+  .component('me', Me)
+  .component('monitor', Monitor)
+  .component('GoodsFilled', GoodsFilled)
+  .component('User', User)
+  .component('ChatDotRound', ChatDotRound)
+  .component('ArrowDown', ArrowDown);
 // app.use(ElementPlus);
 app.use(router);
 app.use(store);
