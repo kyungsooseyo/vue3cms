@@ -12,6 +12,7 @@
     "sourceMap": true,
     "baseUrl": ".",
     "types": ["webpack-env"],
+    // 配置别名能够有路径提示用的
     "paths": {
       "@/*": ["src/*"]
     },

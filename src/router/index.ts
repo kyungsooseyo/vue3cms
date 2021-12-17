@@ -35,5 +35,10 @@ router.beforeEach((to) => {
       return '/login';
     }
   }
+  // if (to.path.indexOf('/main') !== -1) {
+  //   if (to.name === 'notFound') {
+  //     to.name = 'user';
+  //   }
+  // }
 });
 export default router;
