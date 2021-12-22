@@ -13,6 +13,7 @@ export default defineComponent({
     return {};
   }
 });
+// test
 </script>
 
 <style lang="less" scoped>
