@@ -4,16 +4,43 @@
       :model="form"
       ref="form"
       :rules="rules"
-      label-width="80px"
+      :label-width="labelWidth"
       :inline="false"
       size="normal"
     >
       <el-row>
         <template v-for="(item, index) in formItems" :key="index">
-          <el-col :span="8"></el-col>
-          <el-form-item :label="item.label">
-            <el-input :placeholder="item?.placeholder"></el-input>
-          </el-form-item>
+          <el-col v-bind="colLayout">
+            <el-form-item :label="item.label" :style="itemStyle">
+              <template v-if="item.type == 'input' || item.type == 'password'">
+                <el-input
+                  :placeholder="item?.placeholder"
+                  :show-password="item.type == 'password'"
+                ></el-input>
+              </template>
+              <template v-else-if="item.type == 'select'">
+                <el-select
+                  :placeholder="item.placeholder"
+                  style="width: 100%"
+                  v-bind="item.otherOptions"
+                >
+                  <el-option
+                    v-for="option in item.options"
+                    :key="option?.value"
+                    :value="options?.value"
+                    >{{ option.label }}</el-option
+                  >
+                </el-select>
+              </template>
+              <template
+                v-else-if="item.type == 'datepicker'"
+                style="width: 100%"
+              >
+                <!-- 通过v-bind直接将otherOptions（所有的）绑定在了date-picker上 -->
+                <el-date-picker v-bind="item.otherOptions"></el-date-picker>
+              </template>
+            </el-form-item>
+          </el-col>
         </template>
       </el-row>
     </el-form>
@@ -26,7 +53,25 @@ import { IFormItem } from '@/baseUI/form/types';
 export default defineComponent({
   name: 'myForm',
   props: {
-    formItems: { type: Array as PropType<IFormItem[]>, default: () => [] }
+    formItems: { type: Array as PropType<IFormItem[]>, default: () => [] },
+    labelWidth: {
+      type: String,
+      default: '120px'
+    },
+    itemStyle: {
+      type: Object,
+      default: () => ({ padding: '10px 40px' })
+    },
+    colLayout: {
+      type: Object,
+      default: () => ({
+        xl: 6, // >1920px 4个
+        lg: 8,
+        md: 12,
+        sm: 24,
+        xs: 24
+      })
+    }
   },
   setup() {
     return {};
@@ -34,4 +79,8 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped lang="less">
+.my-form {
+  padding-top: 22px;
+}
+</style>

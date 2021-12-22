@@ -1,22 +1,19 @@
 <template>
   <div class="user">
-    <my-form :formItems="formItems"></my-form>
-    <div></div>
+    <my-form v-bind="formConfig"></my-form>
+    <div class="content"></div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import myForm, { IFormItem } from '@/baseUI/form/index';
+import myForm from '@/baseUI/form/index';
+import { formConfig } from './config/search.config';
 export default defineComponent({
   components: { myForm },
   name: 'user',
   setup() {
-    const formItems: IFormItem[] = [
-      { label: '用户名', placeholder: '请输入用户名' },
-      { label: '密码', placeholder: '请输入密码' }
-    ];
-    return { formItems };
+    return { formConfig };
   }
 });
 </script>
