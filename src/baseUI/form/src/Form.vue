@@ -6,7 +6,6 @@
       :rules="rules"
       :label-width="labelWidth"
       :inline="false"
-      size="normal"
     >
       <el-row>
         <template v-for="(item, index) in formItems" :key="index">
@@ -27,7 +26,7 @@
                   <el-option
                     v-for="option in item.options"
                     :key="option?.value"
-                    :value="options?.value"
+                    :value="option?.value"
                     >{{ option.label }}</el-option
                   >
                 </el-select>
@@ -48,7 +47,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, PropType, reactive } from 'vue';
 import { IFormItem } from '@/baseUI/form/types';
 export default defineComponent({
   name: 'myForm',
@@ -74,7 +73,10 @@ export default defineComponent({
     }
   },
   setup() {
-    return {};
+    // todo 这应该少些东西
+    const form = reactive({});
+    const rules = reactive({});
+    return { form, rules };
   }
 });
 </script>

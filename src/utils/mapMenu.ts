@@ -1,5 +1,7 @@
+import { IBreadcrumb } from '@/baseUI/breadcrumb';
 import { Key } from '@element-plus/icons-vue/dist/types';
 import { RouteRecordRaw } from 'vue-router';
+let firstMenu: any = null;
 export function mapMenuToRoutes(userMenus: any[]): RouteRecordRaw[] {
   const routes: RouteRecordRaw[] = [];
   // 1.先去加载默认所有的routes
@@ -25,6 +27,9 @@ export function mapMenuToRoutes(userMenus: any[]): RouteRecordRaw[] {
         });
         if (route) {
           routes.push(route);
+          if (!firstMenu) {
+            firstMenu = menu;
+          }
         }
       } else {
         _recurseRoute(menu.children);
@@ -34,3 +39,27 @@ export function mapMenuToRoutes(userMenus: any[]): RouteRecordRaw[] {
   _recurseRoute(userMenus);
   return routes;
 }
+export function pathMapBreadcrumbs(userMenus: any[], currentPath: string) {
+  const breadcrumbs: IBreadcrumb[] = [];
+  pathMapToMenu(userMenus, currentPath, breadcrumbs);
+  return breadcrumbs;
+}
+export function pathMapToMenu(
+  userMenus: any[],
+  currentPath: string,
+  breadcrumbs?: IBreadcrumb[]
+): any {
+  for (const menu of userMenus) {
+    if (menu.type == 1) {
+      const findMenu = pathMapToMenu(menu.children ?? [], currentPath);
+      if (findMenu) {
+        breadcrumbs?.push({ name: menu.name });
+        breadcrumbs?.push({ name: findMenu.name });
+        return findMenu;
+      }
+    } else if (menu.type == 2 && menu.url == currentPath) {
+      return menu;
+    }
+  }
+}
+export { firstMenu };

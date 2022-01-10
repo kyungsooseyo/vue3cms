@@ -7,7 +7,9 @@
       ><edit></edit
     ></el-icon>
     <div class="nav-content">
-      <div class="nav-bread">面包屑</div>
+      <div class="nav-bread">
+        <my-breadcrumb :breadcrumbs="breadcrumbs"></my-breadcrumb>
+      </div>
       <div class="user-info">
         <el-dropdown>
           <span class="el-dropdown-link">
@@ -33,17 +35,29 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-
+import { defineComponent, ref, computed } from 'vue';
+import MyBreadcrumb from '@/baseUI/breadcrumb/index';
+import { useRoute } from 'vue-router';
+import { useStore } from '@/store/index';
+import { pathMapBreadcrumbs } from '@/utils/mapMenu';
 export default defineComponent({
   emits: ['foldChange'],
+  components: { MyBreadcrumb },
   setup(props, context) {
     let isFold = ref(false);
     const handleFoldClick = () => {
       isFold.value = !isFold.value;
       context.emit('foldChange', isFold.value);
     };
-    return { isFold, handleFoldClick };
+    const store = useStore();
+    //~ 面包屑数据  用computed 将当前路由缓存起来，当路由改变时重新获得新的面包屑
+    const breadcrumbs = computed(() => {
+      const userMenus = store.state.loginModule?.userMenus;
+      const route = useRoute();
+      const currentPath = route.path;
+      return pathMapBreadcrumbs(userMenus, currentPath);
+    });
+    return { isFold, handleFoldClick, breadcrumbs };
   }
 });
 </script>

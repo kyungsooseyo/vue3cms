@@ -34,16 +34,11 @@ app
   .component('ChatDotRound', ChatDotRound)
   .component('ArrowDown', ArrowDown);
 // app.use(ElementPlus);
+setupStore();
 app.use(router);
 app.use(store);
-setupStore();
 app.use(globalRegister);
 app.mount('#app');
-// interface DataType {
-//   data: [];
-//   returnCode: string;
-//   success: boolean;
-// }
 //! 通过指定泛型的方式来确定返回的东西里面会有什么
 // KYRequest.request<DataType>({
 //   url: '/home/multidata',
